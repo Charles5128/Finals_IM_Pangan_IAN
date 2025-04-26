@@ -5,24 +5,19 @@ require_once 'includes/db.php';
 require_once 'includes/functions.php';
 require_once 'includes/auth.php';
 
-// Ensure user is logged in
 requireLogin();
 
-// Pagination parameters
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
-// Filter parameters
 $subject_id = isset($_GET['subject_id']) ? (int)$_GET['subject_id'] : null;
 $search = isset($_GET['search']) ? sanitizeInput($_GET['search']) : null;
 
-// Get questions with filters and pagination
 $questions = getQuestions($offset, $limit, $subject_id, $search);
 $total_questions = countQuestions($subject_id, $search);
 $total_pages = ceil($total_questions / $limit);
 
-// Get all subjects for the filter
 $subjects = getAllSubjects();
 
 include 'includes/header.php';
@@ -37,7 +32,6 @@ include 'includes/navbar.php';
         </div>
     </div>
     
-    <!-- Search and Filter -->
     <div class="row mb-4">
         <div class="col-md-8">
             <form action="questions.php" method="GET" id="search-form">
@@ -75,7 +69,6 @@ include 'includes/navbar.php';
             No questions found. Try adjusting your search or filter criteria.
         </div>
     <?php else: ?>
-        <!-- Questions List -->
         <div class="row">
             <div class="col">
                 <div class="card">
@@ -119,7 +112,6 @@ include 'includes/navbar.php';
             </div>
         </div>
         
-        <!-- Pagination -->
         <?php if ($total_pages > 1): ?>
             <div class="row mt-4">
                 <div class="col">

@@ -4,11 +4,9 @@ require_once '../includes/config.php';
 require_once '../includes/db.php';
 require_once '../includes/functions.php';
 require_once '../includes/auth.php';
-
-// Ensure user is admin
+ 
 requireAdmin();
-
-// Process subject addition
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_subject'])) {
     $subject_name = sanitizeInput($_POST['subject_name']);
     $subject_description = sanitizeInput($_POST['subject_description']);
@@ -17,8 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_subject'])) {
         $_SESSION['error_message'] = "Subject name is required.";
     } else {
         $pdo = getDbConnection();
-        
-        // Check if subject already exists
+ 
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM subjects WHERE LOWER(subject_name) = LOWER(:subject_name)");
         $stmt->bindParam(':subject_name', $subject_name, PDO::PARAM_STR);
         $stmt->execute();
@@ -26,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_subject'])) {
         if ($stmt->fetchColumn() > 0) {
             $_SESSION['error_message'] = "Subject already exists.";
         } else {
-            // Insert new subject
+          
             $stmt = $pdo->prepare("
                 INSERT INTO subjects (subject_name, description)
                 VALUES (:subject_name, :description)
@@ -45,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_subject'])) {
     redirect('../admin/manage_subjects.php');
 }
 
-// Process subject update
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_subject'])) {
     $subject_id = (int)$_POST['subject_id'];
     $subject_name = sanitizeInput($_POST['subject_name']);
@@ -56,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_subject'])) {
     } else {
         $pdo = getDbConnection();
         
-        // Check if subject already exists (excluding current subject)
+     
         $stmt = $pdo->prepare("
             SELECT COUNT(*) FROM subjects 
             WHERE LOWER(subject_name) = LOWER(:subject_name) 
@@ -69,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_subject'])) {
         if ($stmt->fetchColumn() > 0) {
             $_SESSION['error_message'] = "Subject name already exists.";
         } else {
-            // Update subject
+        
             $stmt = $pdo->prepare("
                 UPDATE subjects 
                 SET subject_name = :subject_name, description = :description
@@ -90,13 +87,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_subject'])) {
     redirect('../admin/manage_subjects.php');
 }
 
-// Process subject deletion
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_subject'])) {
     $subject_id = (int)$_POST['subject_id'];
     
     $pdo = getDbConnection();
     
-    // Check if subject has associated questions
+  
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM questions WHERE subject_id = :subject_id");
     $stmt->bindParam(':subject_id', $subject_id, PDO::PARAM_INT);
     $stmt->execute();
@@ -117,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_subject'])) {
     redirect('../admin/manage_subjects.php');
 }
 
-// Get all subjects
+ 
 $pdo = getDbConnection();
 $stmt = $pdo->query("SELECT s.*, (SELECT COUNT(*) FROM questions q WHERE q.subject_id = s.subject_id) as question_count FROM subjects s ORDER BY s.subject_name");
 $subjects = $stmt->fetchAll();
@@ -147,7 +144,7 @@ include '../includes/navbar.php';
         <div class="alert alert-danger"><?php echo $_SESSION['error_message']; unset($_SESSION['error_message']); ?></div>
     <?php endif; ?>
     
-    <!-- Subjects List -->
+   
     <div class="card">
         <div class="card-header bg-primary text-white">
             <div class="d-flex justify-content-between align-items-center">
@@ -185,7 +182,7 @@ include '../includes/navbar.php';
                                             <i class="fas fa-trash"></i>
                                         </button>
                                         
-                                        <!-- Edit Subject Modal -->
+                                        
                                         <div class="modal fade" id="editSubjectModal<?php echo $subject['subject_id']; ?>" tabindex="-1" aria-labelledby="editSubjectModalLabel<?php echo $subject['subject_id']; ?>" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -216,7 +213,7 @@ include '../includes/navbar.php';
                                             </div>
                                         </div>
                                         
-                                        <!-- Delete Subject Modal -->
+                                      
                                         <div class="modal fade" id="deleteSubjectModal<?php echo $subject['subject_id']; ?>" tabindex="-1" aria-labelledby="deleteSubjectModalLabel<?php echo $subject['subject_id']; ?>" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -257,7 +254,7 @@ include '../includes/navbar.php';
     </div>
 </div>
 
-<!-- Add Subject Modal -->
+ 
 <div class="modal fade" id="addSubjectModal" tabindex="-1" aria-labelledby="addSubjectModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

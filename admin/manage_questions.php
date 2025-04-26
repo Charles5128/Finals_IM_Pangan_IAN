@@ -5,10 +5,10 @@ require_once '../includes/db.php';
 require_once '../includes/functions.php';
 require_once '../includes/auth.php';
 
-// Ensure user is admin
+ 
 requireAdmin();
 
-// Process question deletion
+  
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_question'])) {
     $question_id = (int)$_POST['question_id'];
     
@@ -25,21 +25,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_question'])) {
     redirect('../admin/manage_questions.php');
 }
 
-// Pagination parameters
+ 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
-// Filter parameters
+ 
 $subject_id = isset($_GET['subject_id']) ? (int)$_GET['subject_id'] : null;
 $search = isset($_GET['search']) ? sanitizeInput($_GET['search']) : null;
 
-// Get questions with filters and pagination
+ 
 $questions = getQuestions($offset, $limit, $subject_id, $search);
 $total_questions = countQuestions($subject_id, $search);
 $total_pages = ceil($total_questions / $limit);
 
-// Get all subjects for the filter
+ 
 $subjects = getAllSubjects();
 
 include '../includes/header.php';
@@ -67,7 +67,7 @@ include '../includes/navbar.php';
         <div class="alert alert-danger"><?php echo $_SESSION['error_message']; unset($_SESSION['error_message']); ?></div>
     <?php endif; ?>
     
-    <!-- Search and Filter -->
+  
     <div class="row mb-4">
         <div class="col-md-8">
             <form action="../admin/manage_questions.php" method="GET" id="search-form">
@@ -105,7 +105,7 @@ include '../includes/navbar.php';
             No questions found. Try adjusting your search or filter criteria.
         </div>
     <?php else: ?>
-        <!-- Questions List -->
+       
         <div class="card">
             <div class="card-header bg-primary text-white">
                 <div class="d-flex justify-content-between align-items-center">
@@ -138,7 +138,7 @@ include '../includes/navbar.php';
                                             <i class="fas fa-trash"></i>
                                         </button>
                                         
-                                        <!-- Delete Modal -->
+                                       
                                         <div class="modal fade" id="deleteModal<?php echo $question['question_id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?php echo $question['question_id']; ?>" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -168,7 +168,7 @@ include '../includes/navbar.php';
             </div>
         </div>
         
-        <!-- Pagination -->
+ 
         <?php if ($total_pages > 1): ?>
             <div class="row mt-4">
                 <div class="col">

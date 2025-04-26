@@ -5,62 +5,54 @@ require_once 'includes/db.php';
 require_once 'includes/functions.php';
 require_once 'includes/auth.php';
 
-// Ensure user is logged in
 requireLogin();
 
-// Get user data
 $user = getUserById($_SESSION['user_id']);
 
 $success_message = '';
 $error_message = '';
 
-// Process profile update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['update_profile'])) {
         $username = sanitizeInput($_POST['username']);
         $email = sanitizeInput($_POST['email']);
         
-        // Handle profile image upload
-        $profile_image = $user['profile_image']; // Default to current image
-        
+        $profile_image = $user['profile_image'];
+
         if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
             $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
-            $max_size = 2 * 1024 * 1024; // 2MB
-            
+            $max_size = 2 * 1024 * 1024;
+
             if (!in_array($_FILES['profile_image']['type'], $allowed_types)) {
                 $error_message = "Only JPG, PNG, and GIF files are allowed";
             } elseif ($_FILES['profile_image']['size'] > $max_size) {
                 $error_message = "File size should be less than 2MB";
             } else {
-                // Create uploads directory if it doesn't exist
                 if (!file_exists(UPLOAD_DIR)) {
                     mkdir(UPLOAD_DIR, 0777, true);
                 }
-                
-                // Generate unique filename
+
                 $file_extension = pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION);
                 $new_filename = 'profile_' . $_SESSION['user_id'] . '_' . time() . '.' . $file_extension;
                 $upload_path = UPLOAD_DIR . $new_filename;
-                
+
                 if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $upload_path)) {
-                    // Delete old profile image if exists
                     if ($user['profile_image'] && file_exists(UPLOAD_DIR . $user['profile_image'])) {
                         unlink(UPLOAD_DIR . $user['profile_image']);
                     }
-                    
+
                     $profile_image = $new_filename;
                 } else {
                     $error_message = "Failed to upload file";
                 }
             }
         }
-        
+
         if (empty($error_message)) {
             $result = updateProfile($_SESSION['user_id'], $username, $email, $profile_image);
             
             if ($result['success']) {
                 $success_message = "Profile updated successfully";
-                // Refresh user data
                 $user = getUserById($_SESSION['user_id']);
             } else {
                 $error_message = implode('<br>', $result['errors']);

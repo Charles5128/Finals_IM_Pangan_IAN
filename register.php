@@ -4,8 +4,6 @@ require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
 require_once 'includes/auth.php';
-
-// Redirect if already logged in
 if (isLoggedIn()) {
     redirect('dashboard.php');
 }
@@ -14,7 +12,6 @@ $errors = [];
 $username = '';
 $email = '';
 
-// Process registration form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = sanitizeInput($_POST['username']);
     $email = sanitizeInput($_POST['email']);
@@ -24,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = registerUser($username, $email, $password, $confirm_password);
     
     if ($result['success']) {
-        // Set success message and redirect to login page
         $_SESSION['success_message'] = "Registration successful! You can now login.";
         redirect('login.php');
     } else {

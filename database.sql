@@ -1,6 +1,3 @@
--- MySQL schema for Exam Reviewer
-
--- Users table
 CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(30) NOT NULL UNIQUE,
@@ -12,14 +9,12 @@ CREATE TABLE IF NOT EXISTS users (
     last_login TIMESTAMP NULL DEFAULT NULL
 );
 
--- Subjects table
 CREATE TABLE IF NOT EXISTS subjects (
     subject_id INT AUTO_INCREMENT PRIMARY KEY,
     subject_name VARCHAR(100) NOT NULL UNIQUE,
     description TEXT DEFAULT NULL
 );
 
--- Questions table
 CREATE TABLE IF NOT EXISTS questions (
     question_id INT AUTO_INCREMENT PRIMARY KEY,
     subject_id INT NOT NULL,
@@ -33,7 +28,6 @@ CREATE TABLE IF NOT EXISTS questions (
     FOREIGN KEY (subject_id) REFERENCES subjects (subject_id)
 );
 
--- Quiz results table
 CREATE TABLE IF NOT EXISTS quiz_results (
     result_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -45,18 +39,14 @@ CREATE TABLE IF NOT EXISTS quiz_results (
     FOREIGN KEY (subject_id) REFERENCES subjects (subject_id)
 );
 
--- Create indexes
 CREATE INDEX idx_question_subject ON questions (subject_id);
 CREATE INDEX idx_result_user ON quiz_results (user_id);
 CREATE INDEX idx_result_subject ON quiz_results (subject_id);
 
--- Insert default admin user
--- Username: admin, Password: admin123 (hashed)
 INSERT INTO users (username, email, password, role, created_at) 
 VALUES ('admin', 'admin@example.com', '$2y$10$P58xzWm6UXs33QKnKPg80uUrHUvBaZlO5xVLQ1rIHEDYrklzhPmPi', 'admin', NOW())
 ON DUPLICATE KEY UPDATE email = email;
 
--- Insert sample subjects
 INSERT INTO subjects (subject_name, description) 
 VALUES 
 ('Mathematics', 'Questions related to algebra, geometry, calculus, and other mathematical concepts'),
@@ -66,7 +56,6 @@ VALUES
 ('English', 'Questions about grammar, vocabulary, literature, and language skills')
 ON DUPLICATE KEY UPDATE subject_name = subject_name;
 
--- Insert sample questions for Mathematics
 INSERT INTO questions (subject_id, question_text, option_a, option_b, option_c, option_d, correct_answer, explanation) 
 SELECT 
     s.subject_id,
@@ -97,7 +86,6 @@ SELECT
 FROM subjects s WHERE s.subject_name = 'Mathematics'
 LIMIT 1;
 
--- Insert sample questions for Science
 INSERT INTO questions (subject_id, question_text, option_a, option_b, option_c, option_d, correct_answer, explanation) 
 SELECT 
     s.subject_id,
@@ -128,7 +116,6 @@ SELECT
 FROM subjects s WHERE s.subject_name = 'Science'
 LIMIT 1;
 
--- Insert sample questions for History
 INSERT INTO questions (subject_id, question_text, option_a, option_b, option_c, option_d, correct_answer, explanation) 
 SELECT 
     s.subject_id,
@@ -159,7 +146,6 @@ SELECT
 FROM subjects s WHERE s.subject_name = 'History'
 LIMIT 1;
 
--- Insert sample questions for Computer Science
 INSERT INTO questions (subject_id, question_text, option_a, option_b, option_c, option_d, correct_answer, explanation) 
 SELECT 
     s.subject_id,
@@ -190,7 +176,6 @@ SELECT
 FROM subjects s WHERE s.subject_name = 'Computer Science'
 LIMIT 1;
 
--- Insert sample questions for English
 INSERT INTO questions (subject_id, question_text, option_a, option_b, option_c, option_d, correct_answer, explanation) 
 SELECT 
     s.subject_id,

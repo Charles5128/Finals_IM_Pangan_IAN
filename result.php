@@ -5,32 +5,25 @@ require_once 'includes/db.php';
 require_once 'includes/functions.php';
 require_once 'includes/auth.php';
 
-// Ensure user is logged in
 requireLogin();
 
-// Check if this is a new quiz result
 $is_new_result = isset($_GET['new']) && $_GET['new'] == 1 && isset($_SESSION['quiz_result']);
 
-// Get user data
 $user = getUserById($_SESSION['user_id']);
 
-// If not viewing a specific quiz result, show all results
 $pdo = getDbConnection();
 
 if ($is_new_result) {
     $quiz_result = $_SESSION['quiz_result'];
     
-    // Get subject name
     $stmt = $pdo->prepare("SELECT subject_name FROM subjects WHERE subject_id = :subject_id");
     $stmt->bindParam(':subject_id', $quiz_result['subject_id'], PDO::PARAM_INT);
     $stmt->execute();
     $subject = $stmt->fetch();
     $quiz_result['subject_name'] = $subject['subject_name'];
     
-    // Clear session data
     unset($_SESSION['quiz_result']);
 } else {
-    // Get all quiz results for the user
     $stmt = $pdo->prepare("
         SELECT qr.*, s.subject_name 
         FROM quiz_results qr
@@ -49,7 +42,6 @@ include 'includes/navbar.php';
 
 <div class="container">
     <?php if ($is_new_result): ?>
-        <!-- New Quiz Result -->
         <div class="row mb-4">
             <div class="col">
                 <h1>Quiz Result</h1>
@@ -107,7 +99,6 @@ include 'includes/navbar.php';
             </div>
         </div>
     <?php else: ?>
-        <!-- All Quiz Results -->
         <div class="row mb-4">
             <div class="col">
                 <h1>My Quiz Results</h1>

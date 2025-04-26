@@ -5,33 +5,25 @@ require_once 'includes/db.php';
 require_once 'includes/functions.php';
 require_once 'includes/auth.php';
 
-// Ensure user is admin
 requireAdmin();
 
-// Get statistics
 $pdo = getDbConnection();
 
-// Total questions
 $stmt = $pdo->query("SELECT COUNT(*) FROM questions");
 $total_questions = $stmt->fetchColumn();
 
-// Total users
 $stmt = $pdo->query("SELECT COUNT(*) FROM users");
 $total_users = $stmt->fetchColumn();
 
-// Total subjects
 $stmt = $pdo->query("SELECT COUNT(*) FROM subjects");
 $total_subjects = $stmt->fetchColumn();
 
-// Total quizzes taken
 $stmt = $pdo->query("SELECT COUNT(*) FROM quiz_results");
 $total_quizzes = $stmt->fetchColumn();
 
-// Recent users
 $stmt = $pdo->query("SELECT * FROM users ORDER BY created_at DESC LIMIT 5");
 $recent_users = $stmt->fetchAll();
 
-// Recent questions
 $stmt = $pdo->query("
     SELECT q.*, s.subject_name 
     FROM questions q
@@ -53,7 +45,6 @@ include 'includes/navbar.php';
         </div>
     </div>
     
-    <!-- Statistics Cards -->
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="card bg-primary text-white">
@@ -104,7 +95,6 @@ include 'includes/navbar.php';
         </div>
     </div>
     
-    <!-- Quick Actions -->
     <div class="row mb-4">
         <div class="col">
             <div class="card">
@@ -148,7 +138,6 @@ include 'includes/navbar.php';
     </div>
     
     <div class="row">
-        <!-- Recent Users -->
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -184,7 +173,6 @@ include 'includes/navbar.php';
             </div>
         </div>
         
-        <!-- Recent Questions -->
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">

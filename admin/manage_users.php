@@ -5,10 +5,10 @@ require_once '../includes/db.php';
 require_once '../includes/functions.php';
 require_once '../includes/auth.php';
 
-// Ensure user is admin
+ 
 requireAdmin();
 
-// Process user role update
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_role'])) {
     $user_id = (int)$_POST['user_id'];
     $new_role = sanitizeInput($_POST['role']);
@@ -31,11 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_role'])) {
     redirect('../admin/manage_users.php');
 }
 
-// Process user deletion
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_user'])) {
     $user_id = (int)$_POST['user_id'];
     
-    // Check if attempting to delete self
+   
     if ($user_id === $_SESSION['user_id']) {
         $_SESSION['error_message'] = "You cannot delete your own account.";
         redirect('../admin/manage_users.php');
@@ -54,15 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_user'])) {
     redirect('../admin/manage_users.php');
 }
 
-// Pagination parameters
+ 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
-// Search parameter
+ 
 $search = isset($_GET['search']) ? sanitizeInput($_GET['search']) : null;
 
-// Get users with search and pagination
+ 
 $pdo = getDbConnection();
 $params = [];
 $sql = "SELECT * FROM users";
@@ -83,7 +83,7 @@ foreach ($params as $key => $value) {
 $stmt->execute();
 $users = $stmt->fetchAll();
 
-// Count total users for pagination
+ 
 $countSql = "SELECT COUNT(*) FROM users";
 if ($search) {
     $countSql .= " WHERE username LIKE :search OR email LIKE :search";
@@ -117,7 +117,7 @@ include '../includes/navbar.php';
         <div class="alert alert-danger"><?php echo $_SESSION['error_message']; unset($_SESSION['error_message']); ?></div>
     <?php endif; ?>
     
-    <!-- Search Box -->
+ 
     <div class="row mb-4">
         <div class="col-md-6 ms-auto">
             <form action="../admin/manage_users.php" method="GET" id="search-form">
@@ -129,7 +129,7 @@ include '../includes/navbar.php';
         </div>
     </div>
     
-    <!-- Users List -->
+ 
     <div class="card">
         <div class="card-header bg-primary text-white">
             <div class="d-flex justify-content-between align-items-center">
@@ -177,7 +177,7 @@ include '../includes/navbar.php';
                                             </button>
                                         <?php endif; ?>
                                         
-                                        <!-- Role Modal -->
+                               
                                         <div class="modal fade" id="roleModal<?php echo $user['user_id']; ?>" tabindex="-1" aria-labelledby="roleModalLabel<?php echo $user['user_id']; ?>" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -206,7 +206,7 @@ include '../includes/navbar.php';
                                             </div>
                                         </div>
                                         
-                                        <!-- Delete Modal -->
+                          
                                         <?php if ($user['user_id'] !== $_SESSION['user_id']): ?>
                                             <div class="modal fade" id="deleteModal<?php echo $user['user_id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?php echo $user['user_id']; ?>" aria-hidden="true">
                                                 <div class="modal-dialog">
@@ -240,7 +240,7 @@ include '../includes/navbar.php';
         </div>
     </div>
     
-    <!-- Pagination -->
+ 
     <?php if ($total_pages > 1): ?>
         <div class="row mt-4">
             <div class="col">

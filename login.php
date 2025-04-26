@@ -5,7 +5,6 @@ require_once 'includes/db.php';
 require_once 'includes/functions.php';
 require_once 'includes/auth.php';
 
-// Redirect if already logged in
 if (isLoggedIn()) {
     redirect('dashboard.php');
 }
@@ -13,7 +12,6 @@ if (isLoggedIn()) {
 $errors = [];
 $username = '';
 
-// Process login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = sanitizeInput($_POST['username']);
     $password = $_POST['password'];
@@ -21,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = loginUser($username, $password);
     
     if ($result['success']) {
-        // Redirect to dashboard or previous page if available
         $redirect = isset($_SESSION['redirect_url']) ? $_SESSION['redirect_url'] : 'dashboard.php';
         unset($_SESSION['redirect_url']);
         redirect($redirect);

@@ -5,10 +5,9 @@ require_once '../includes/db.php';
 require_once '../includes/functions.php';
 require_once '../includes/auth.php';
 
-// Ensure user is admin
+ 
 requireAdmin();
-
-// Get question ID from URL
+ 
 $question_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if (!$question_id) {
@@ -18,9 +17,9 @@ if (!$question_id) {
 $error_message = '';
 $success_message = '';
 
-// Process form submission
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
+ 
     $subject_id = (int)$_POST['subject_id'];
     $question_text = sanitizeInput($_POST['question_text']);
     $option_a = sanitizeInput($_POST['option_a']);
@@ -30,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $correct_answer = sanitizeInput($_POST['correct_answer']);
     $explanation = sanitizeInput($_POST['explanation']);
     
-    // Validate inputs
+ 
     if (empty($subject_id)) {
         $error_message = "Please select a subject";
     } elseif (empty($question_text)) {
@@ -40,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (empty($correct_answer)) {
         $error_message = "Correct answer is required";
     } else {
-        // Update question in database
+ 
         $pdo = getDbConnection();
         $stmt = $pdo->prepare("
             UPDATE questions 
@@ -72,15 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
-// Get question data
+ 
 $question = getQuestionById($question_id);
 
 if (!$question) {
     redirect('../admin/manage_questions.php');
 }
-
-// Get all subjects for dropdown
 $subjects = getAllSubjects();
 
 include '../includes/header.php';

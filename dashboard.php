@@ -5,19 +5,19 @@ require_once 'includes/db.php';
 require_once 'includes/functions.php';
 require_once 'includes/auth.php';
 
-// Ensure user is logged in
+ 
 requireLogin();
 
-// Get user data
+ 
 $user = getUserById($_SESSION['user_id']);
 
-// Get user statistics
+ 
 $stats = getUserStats($_SESSION['user_id']);
 
-// Get recent quiz results
+ 
 $recentQuizzes = getRecentQuizResults($_SESSION['user_id']);
 
-// Get all subjects for the quiz selection
+ 
 $subjects = getAllSubjects();
 
 include 'includes/header.php';
@@ -31,8 +31,7 @@ include 'includes/navbar.php';
             <p class="lead">This is your dashboard where you can track your progress and access quizzes.</p>
         </div>
     </div>
-    
-    <!-- Statistics Cards -->
+ 
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="card stat-card">
@@ -63,7 +62,7 @@ include 'includes/navbar.php';
     </div>
     
     <div class="row">
-        <!-- Quick Quiz Section -->
+      
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -99,7 +98,7 @@ include 'includes/navbar.php';
             </div>
         </div>
         
-        <!-- Recent Quiz Results -->
+ 
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -138,7 +137,7 @@ include 'includes/navbar.php';
         </div>
     </div>
     
-    <!-- Quick Links -->
+ 
     <div class="row mt-4">
         <div class="col-12">
             <div class="card">

@@ -4,16 +4,13 @@ require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
 
-// Get total number of questions
 $pdo = getDbConnection();
 $stmt = $pdo->query("SELECT COUNT(*) FROM questions");
 $totalQuestions = $stmt->fetchColumn();
 
-// Get total number of subjects
 $stmt = $pdo->query("SELECT COUNT(*) FROM subjects");
 $totalSubjects = $stmt->fetchColumn();
 
-// Get total number of users
 $stmt = $pdo->query("SELECT COUNT(*) FROM users");
 $totalUsers = $stmt->fetchColumn();
 
@@ -21,7 +18,6 @@ include 'includes/header.php';
 include 'includes/navbar.php';
 ?>
 
-<!-- Hero Section -->
 <div class="hero">
     <div class="container text-center">
         <h1>Welcome to <?php echo APP_NAME; ?></h1>
@@ -37,7 +33,6 @@ include 'includes/navbar.php';
     </div>
 </div>
 
-<!-- Features Section -->
 <div class="container features">
     <h2 class="text-center mb-4">Why Use Our Exam Reviewer?</h2>
     
@@ -74,7 +69,6 @@ include 'includes/navbar.php';
     </div>
 </div>
 
-<!-- Statistics Section -->
 <div class="container mt-5">
     <h2 class="text-center mb-4">Our Platform at a Glance</h2>
     
@@ -108,7 +102,6 @@ include 'includes/navbar.php';
     </div>
 </div>
 
-<!-- How It Works Section -->
 <div class="container mt-5">
     <h2 class="text-center mb-4">How It Works</h2>
     
@@ -155,7 +148,6 @@ include 'includes/navbar.php';
     </div>
 </div>
 
-<!-- Call to Action -->
 <div class="container mt-5">
     <div class="card bg-primary text-white">
         <div class="card-body text-center p-5">
@@ -170,10 +162,9 @@ include 'includes/navbar.php';
     </div>
 </div>
 
-<!-- Footer -->
 <footer class="bg-dark text-white mt-5 py-4">
     <div class="container text-center">
-        <p>&copy; <?php echo date('Y'); ?> <?php echo APP_NAME; ?>. All Rights Reserved.</p>
+        <p>&copy; <?php echo date('Y'); ?> <?php echo APP_NAME; ?>. Charles ian Pangan.</p>
     </div>
 </footer>
 

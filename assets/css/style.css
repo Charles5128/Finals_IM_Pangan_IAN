@@ -1,17 +1,16 @@
-/* Global Styles */
+ 
 body {
     background-color: #f8f9fa;
     color: #343a40;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Navbar Customization */
+ 
 .navbar-brand {
     font-weight: bold;
     font-size: 1.5rem;
 }
-
-/* Cards */
+ 
 .card {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -29,7 +28,7 @@ body {
     font-weight: bold;
 }
 
-/* Buttons */
+ 
 .btn-primary {
     background-color: #0d6efd;
     border-color: #0d6efd;
@@ -40,7 +39,7 @@ body {
     border-color: #0a58ca;
 }
 
-/* Hero Section */
+ 
 .hero {
     background-color: #e9ecef;
     padding: 60px 0;
@@ -59,7 +58,7 @@ body {
     margin-bottom: 30px;
 }
 
-/* Features */
+ 
 .features .card {
     height: 100%;
     text-align: center;
@@ -72,7 +71,7 @@ body {
     color: #0d6efd;
 }
 
-/* Dashboard Statistics */
+ 
 .stat-card {
     text-align: center;
     padding: 20px;
@@ -89,7 +88,7 @@ body {
     color: #6c757d;
 }
 
-/* Question list */
+ 
 .question-card {
     margin-bottom: 15px;
 }
@@ -113,7 +112,7 @@ body {
     color: #198754;
 }
 
-/* Profile */
+ 
 .profile-image-container {
     width: 150px;
     height: 150px;
@@ -129,7 +128,7 @@ body {
     object-fit: cover;
 }
 
-/* Quiz */
+ 
 .quiz-option {
     display: block;
     padding: 10px 15px;
@@ -149,13 +148,13 @@ body {
     border-color: #0d6efd;
 }
 
-/* Pagination */
+ 
 .pagination {
     justify-content: center;
     margin-top: 30px;
 }
 
-/* Footer */
+ 
 footer {
     margin-top: 50px;
     padding: 30px 0;
@@ -163,7 +162,7 @@ footer {
     color: white;
 }
 
-/* Responsive adjustments */
+ 
 @media (max-width: 768px) {
     .hero h1 {
         font-size: 2rem;

@@ -5,10 +5,8 @@ require_once 'includes/db.php';
 require_once 'includes/functions.php';
 require_once 'includes/auth.php';
 
-// Ensure user is logged in
 requireLogin();
 
-// Process quiz submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_quiz'])) {
     $subject_id = (int)$_POST['subject_id'];
     $user_answers = isset($_POST['answers']) ? $_POST['answers'] : [];
@@ -17,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_quiz'])) {
     $score = 0;
     $total_questions = count($question_ids);
     
-    // Calculate score
     foreach ($question_ids as $question_id) {
         $pdo = getDbConnection();
         $stmt = $pdo->prepare("SELECT correct_answer FROM questions WHERE question_id = :question_id");
@@ -32,9 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_quiz'])) {
         }
     }
     
-    // Save quiz result
     if (saveQuizResult($_SESSION['user_id'], $subject_id, $score, $total_questions)) {
-        // Redirect to result page
         $_SESSION['quiz_result'] = [
             'score' => $score,
             'total' => $total_questions,
@@ -46,16 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_quiz'])) {
     }
 }
 
-// Get subject and number of questions from GET parameters
 $subject_id = isset($_GET['subject_id']) ? (int)$_GET['subject_id'] : 0;
 $num_questions = isset($_GET['num_questions']) ? (int)$_GET['num_questions'] : 10;
 
-// Validate parameters
 if ($subject_id <= 0) {
     redirect('dashboard.php');
 }
 
-// Get subject information
 $pdo = getDbConnection();
 $stmt = $pdo->prepare("SELECT * FROM subjects WHERE subject_id = :subject_id");
 $stmt->bindParam(':subject_id', $subject_id, PDO::PARAM_INT);
@@ -67,7 +59,6 @@ if ($stmt->rowCount() === 0) {
 
 $subject = $stmt->fetch();
 
-// Get random questions for the quiz
 $randomFunction = (DB_TYPE === 'pgsql') ? 'RANDOM()' : 'RAND()';
 $stmt = $pdo->prepare("
     SELECT * FROM questions 
@@ -81,7 +72,6 @@ $stmt->execute();
 
 $questions = $stmt->fetchAll();
 
-// If not enough questions available, adjust the total
 $actual_num_questions = count($questions);
 
 if ($actual_num_questions === 0) {
