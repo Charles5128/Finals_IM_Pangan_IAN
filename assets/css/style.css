@@ -1,0 +1,179 @@
+/* Global Styles */
+body {
+    background-color: #f8f9fa;
+    color: #343a40;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar Customization */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Cards */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    font-weight: bold;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #e9ecef;
+    padding: 60px 0;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+/* Features */
+.features .card {
+    height: 100%;
+    text-align: center;
+    padding: 20px;
+}
+
+.features .card i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #0d6efd;
+}
+
+/* Dashboard Statistics */
+.stat-card {
+    text-align: center;
+    padding: 20px;
+}
+
+.stat-card .stat-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+.stat-card .stat-title {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+/* Question list */
+.question-card {
+    margin-bottom: 15px;
+}
+
+.question-text {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.options-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.options-list li {
+    padding: 5px 0;
+}
+
+.correct-answer {
+    font-weight: bold;
+    color: #198754;
+}
+
+/* Profile */
+.profile-image-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px;
+    border: 5px solid #e9ecef;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Quiz */
+.quiz-option {
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quiz-option:hover {
+    background-color: #e9ecef;
+}
+
+.quiz-option.selected {
+    background-color: #cfe2ff;
+    border-color: #0d6efd;
+}
+
+/* Pagination */
+.pagination {
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* Footer */
+footer {
+    margin-top: 50px;
+    padding: 30px 0;
+    background-color: #343a40;
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .stat-card .stat-value {
+        font-size: 2rem;
+    }
+}
